@@ -21,6 +21,7 @@
 - PhoneNumber : String
 - NearInTime\[최근 입차시간\] : LocalDateTime
 - Amount : Int
+- isPayment : Boolean
 ### 행위
 1. 입차
 2. 출차
