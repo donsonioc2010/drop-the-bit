@@ -25,15 +25,25 @@ import java.time.format.DateTimeFormatter;
  */
 public class App {
 	public static void main(String[] args) {
+		Long id = 1L;
+		String carNumber = "12가 3456";
+		String phoneNumber = "010-1234-5679";
+		String parkingStartTime = LocalDateTime.now()
+			.format(DateTimeFormatter.ISO_INSTANT.ofPattern("yyyy-MM-dd HH:mm"));
+		int amount = 1000;
+		boolean isPayment = true;
+
 		System.out.println("나의 목록 관리 시스템");
 		System.out.println("--------------------------------------------------------------------");
 		System.out.println(
-			String.format("%s\t%s\t%s\t%s\t%s\t%s", "번호", "차량번호", "전화번호", "주차 시작 시간", "주차비용", "결제여부"));
+			String.format("%s\t%s\t%s\t%s\t%s\t%s",
+				"번호", "차량번호", "휴대폰 전화번호", "주차 시작 시간", "주차비용", "결제여부"))
+		;
 
 		System.out.print(
-			String.format("%04d\t%5s\t%10s\t%s\t%s\t%8s\n", 1, "홍길동", "39두1111",
-				LocalDateTime.now().format(DateTimeFormatter.ISO_INSTANT.ofPattern("yyyy-MM-dd HH:mm")), 1000,
-				true));
+			String.format("%04d\t%s\t%s\t%s\t%s\t%8s\n",
+				id, carNumber, phoneNumber, parkingStartTime, amount, isPayment)
+		);
 
 	}
 }
