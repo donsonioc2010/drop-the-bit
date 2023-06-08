@@ -1,18 +1,17 @@
 package parking.process;
 
+import static parking.utils.Prompt.getInputString;
 import static parking.utils.TitlePrintUtils.outputTitle;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 import parking.domain.ParkingCar;
+import parking.utils.Prompt;
 
 public class ParkingProcess {
 	private static final int SIZE = 3;
-	private static Scanner sc;
 	private static ParkingCar[] parkInfo = new ParkingCar[SIZE];
-
 	private static int length = 0;
 
 	public static void inputParkingCar() {
@@ -26,14 +25,9 @@ public class ParkingProcess {
 	}
 
 	private static void addParkingCar(int idx) {
-		System.out.print("차량번호 입력 :");
-		String carNumber = sc.nextLine();
-
-		System.out.print("전화번호 입력 :");
-		String phoneNumber = sc.nextLine();
-
-		System.out.print("계산 여부 입력 ?(y/N) : ");
-		boolean isPayment = sc.nextLine().equalsIgnoreCase("y") ? true : false;
+		String carNumber = getInputString("차량번호 입력 :");
+		String phoneNumber = getInputString("전화번호 입력 :");
+		boolean isPayment = getInputString("계산 여부 입력 ?(y/N) : ").equalsIgnoreCase("y") ? true : false;
 
 		ParkingCar dto = new ParkingCar();
 		dto.setId(idx + 1L);
@@ -50,27 +44,22 @@ public class ParkingProcess {
 	public static void printList() {
 		outputTitle();
 		for (int i = 0; i < length; i++) {
-			System.out.print(
-				String.format("%04d\t%s\t%s\t%s\t%s\t%s\n",
-					parkInfo[i].getId(), parkInfo[i].getCarNumber(), parkInfo[i].getPhoneNumber(),
-					parkInfo[i].getParkingStartTime(), parkInfo[i].getAmount(), parkInfo[i].isPayment())
+			System.out.printf("%04d\t%s\t%s\t%s\t%s\t%s\n",
+				parkInfo[i].getId(),
+				parkInfo[i].getCarNumber(),
+				parkInfo[i].getPhoneNumber(),
+				parkInfo[i].getParkingStartTime(),
+				parkInfo[i].getAmount(),
+				getPaymentStatusToString(parkInfo[i].isPayment())
 			);
 		}
 	}
 
-	public static void scOpen() {
-		sc = new Scanner(System.in);
-	}
-
-	public static void scClose() {
-		sc.close();
-	}
-
 	private static boolean isInputProcessEnd() {
-		System.out.print("계속 진행하겠습니까? (n/N) : ");
-		if (sc.nextLine().equalsIgnoreCase("n")) {
-			return true;
-		}
-		return false;
+		return Prompt.getInputString("계속 진행하겠습니까? (n/N) : ").equalsIgnoreCase("n");
+	}
+
+	private static String getPaymentStatusToString(boolean isPayment) {
+		return isPayment ? "정산완료" : "미정산";
 	}
 }

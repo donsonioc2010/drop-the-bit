@@ -4,6 +4,7 @@ import static parking.utils.TitlePrintUtils.processStartTitle;
 import static parking.utils.TitlePrintUtils.terminalClear;
 
 import parking.process.ParkingProcess;
+import parking.utils.Prompt;
 
 /**
  * ## 로직
@@ -24,12 +25,14 @@ import parking.process.ParkingProcess;
  */
 public class App {
 	public static void main(String[] args) {
-		ParkingProcess.scOpen();
+		Prompt.scOpen();
+
 		processStartTitle();
 		ParkingProcess.inputParkingCar();
 		terminalClear();
 		ParkingProcess.printList();
-		ParkingProcess.scClose();
+
+		Prompt.scClose();
 	}
 
 }
