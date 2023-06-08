@@ -1,9 +1,6 @@
 package parking;
 
-import static parking.utils.TitlePrintUtils.processStartTitle;
-import static parking.utils.TitlePrintUtils.terminalClear;
-
-import parking.process.ParkingProcess;
+import parking.process.MainProcess;
 import parking.utils.Prompt;
 
 /**
@@ -27,10 +24,7 @@ public class App {
 	public static void main(String[] args) {
 		Prompt.scOpen();
 
-		processStartTitle();
-		ParkingProcess.inputParkingCar();
-		terminalClear();
-		ParkingProcess.printList();
+		MainProcess.mainProcess();
 
 		Prompt.scClose();
 	}

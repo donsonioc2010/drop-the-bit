@@ -10,49 +10,114 @@ import parking.domain.ParkingCar;
 import parking.utils.Prompt;
 
 public class ParkingProcess {
-	private static final int SIZE = 3;
+	private static final int SIZE = 50;
 	private static ParkingCar[] parkInfo = new ParkingCar[SIZE];
 	private static int length = 0;
+	private static long userId = 1L;
 
 	public static void inputParkingCar() {
-		for (int i = 0; i < SIZE; i++) {
-			addParkingCar(i);
+		addParkingCar();
+	}
+
+	private static void addParkingCar() {
+		if (isCanUseLength()) {
+			String carNumber = getInputString("차량번호 입력 :");
+			String phoneNumber = getInputString("전화번호 입력 :");
+			boolean isPayment = getInputString("계산 여부 입력 ?(y/N) : ").equalsIgnoreCase("y") ? true : false;
+
+			parkInfo[length] = new ParkingCar(userId,
+				carNumber, phoneNumber,
+				LocalDateTime.now().format(DateTimeFormatter.ISO_INSTANT.ofPattern("yyyy-MM-dd HH:mm")),
+				1000, isPayment
+			);
+			userId++;
 			length++;
-			if (isInputProcessEnd()) {
-				break;
-			}
+		} else {
+			System.out.println("주차장의 사용량이 최대치에 도달하여 더이상 입차를 받지 못합니다.");
 		}
 	}
 
-	private static void addParkingCar(int idx) {
-		String carNumber = getInputString("차량번호 입력 :");
-		String phoneNumber = getInputString("전화번호 입력 :");
-		boolean isPayment = getInputString("계산 여부 입력 ?(y/N) : ").equalsIgnoreCase("y") ? true : false;
+	private static int getIdxById(String id) {
+		if (length <= 0) {
+			return -1;
+		}
 
-		ParkingCar dto = new ParkingCar();
-		dto.setId(idx + 1L);
-		dto.setCarNumber(carNumber);
-		dto.setPhoneNumber(phoneNumber);
-		//Default 일단 1000으로 한다.
-		dto.setAmount(1000);
-		dto.setParkingStartTime(LocalDateTime.now()
-			.format(DateTimeFormatter.ISO_INSTANT.ofPattern("yyyy-MM-dd HH:mm")));
-		dto.setPayment(isPayment);
-		parkInfo[idx] = dto;
+		try {
+			int numId = Integer.parseInt(id);
+			for (int i = 0; i < length; i++) {
+				if (parkInfo[i].getId() == numId) {
+					return i;
+				}
+			}
+		} catch (NumberFormatException e) {
+			System.out.println(id + "가 숫자 타입이 아닙니다.");
+		}
+		printNoInputNo();
+		return -1;
 	}
 
-	public static void printList() {
+	public static void printOne() {
+		if (length <= 0) {
+			System.out.println("입력된 데이터가 없습니다");
+			return;
+		}
+		int idx = getIdxById(Prompt.getInputString("검색희망 번호>"));
+		if (idx > 0) {
+			return;
+		}
+		printParkInfo(parkInfo[idx]);
+	}
+
+	public static void printAllList() {
 		outputTitle();
 		for (int i = 0; i < length; i++) {
-			System.out.printf("%04d\t%s\t%s\t%s\t%s\t%s\n",
-				parkInfo[i].getId(),
-				parkInfo[i].getCarNumber(),
-				parkInfo[i].getPhoneNumber(),
-				parkInfo[i].getParkingStartTime(),
-				parkInfo[i].getAmount(),
-				getPaymentStatusToString(parkInfo[i].isPayment())
-			);
+			printParkInfo(parkInfo[i]);
 		}
+	}
+
+	private static void printNoInputNo() {
+		System.out.println("없는 번호 입니다.");
+	}
+
+	private static void printParkInfo(ParkingCar parkInfo) {
+		System.out.printf("%04d\t%s\t%s\t%s\t%s\t%s\n",
+			parkInfo.getId(),
+			parkInfo.getCarNumber(),
+			parkInfo.getPhoneNumber(),
+			parkInfo.getParkingStartTime(),
+			parkInfo.getAmount(),
+			getPaymentStatusToString(parkInfo.isPayment())
+		);
+	}
+
+	public static void updateParkingCar() {
+		int idx = getIdxById(Prompt.getInputString("조회희망 번호>"));
+		if (idx < 0) {
+			return;
+		}
+		parkInfo[idx].setCarNumber(getInputString("차량번호 입력 :"));
+		parkInfo[idx].setPhoneNumber(getInputString("전화번호 입력 :"));
+		parkInfo[idx].setPayment(getInputString("계산 여부 입력 ?(y/N) : ").equalsIgnoreCase("y") ? true : false);
+	}
+
+	public static void deleteParkingCar() {
+		int idx = getIdxById(Prompt.getInputString("삭제희망 번호>"));
+		if (idx < 0) {
+			return;
+		}
+
+		if (idx == length) {
+			parkInfo[idx] = null;
+			return;
+		}
+		for (int i = idx + 1; i < length; i++) {
+			parkInfo[i - 1] = parkInfo[i];
+		}
+		length--;
+	}
+
+	private static boolean isCanUseLength() {
+		return length < SIZE;
 	}
 
 	private static boolean isInputProcessEnd() {
