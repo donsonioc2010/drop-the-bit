@@ -19,8 +19,9 @@ public class Prompt {
 	}
 
 	public static void scOpen() {
-		if (sc == null)
+		if (sc == null) {
 			sc = new Scanner(System.in);
+		}
 	}
 
 }
