@@ -14,7 +14,8 @@ public class Prompt {
         try {
             return Integer.parseInt(getInputString(title));
         } catch (NumberFormatException e) {
-            System.out.println(Log.getError(Log.getConsoleRedColorToKeyword("입력") + "를 " + Log.getConsoleBlueColorToKeyword("숫자만 ") + "입력해 주시기 바랍니다."));
+            System.out.println(Log.getError(Log.getFontRedToKeyword("입력") + "를 "
+                + Log.getFontBlueToKeyword("숫자만 ") + "입력해 주시기 바랍니다."));
             return -1;
         }
     }
