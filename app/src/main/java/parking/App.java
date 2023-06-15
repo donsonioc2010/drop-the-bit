@@ -27,22 +27,24 @@ public class App {
 
     public static void main(String[] args) {
 
-        Prompt.scOpen();
+        Prompt prompt = new Prompt();
+        ParkingProcess parkingProcess = new ParkingProcess(prompt);
+
         TitlePrintUtils.printMenu();
         while (true) {
-            int menuNo = Prompt.getInputInt(Log.getFontPurpleToKeyword("메인> "));
+            int menuNo = prompt.getInputInt(Log.getFontPurpleToKeyword("메인> "));
             if (menuNo == 0) {
                 TitlePrintUtils.printMenu();
             } else if (menuNo == 1) {
-                ParkingProcess.inputParkingCar();
+                parkingProcess.inputParkingCar();
             } else if (menuNo == 2) {
-                ParkingProcess.printOne();
+                parkingProcess.printOne();
             } else if (menuNo == 3) {
-                ParkingProcess.printAllList();
+                parkingProcess.printAllList();
             } else if (menuNo == 4) {
-                ParkingProcess.updateParkingCar();
+                parkingProcess.updateParkingCar();
             } else if (menuNo == 5) {
-                ParkingProcess.deleteParkingCar();
+                parkingProcess.deleteParkingCar();
             } else if (menuNo == 6) {
                 System.out.println("시스템 종료");
                 break;

@@ -13,6 +13,10 @@ public class Log {
         return LogColor.ANSI_BLUE + keyword + LogColor.ANSI_RESET;
     }
 
+    public static String getFontCyanToKeyword(String keyword) {
+        return LogColor.ANSI_CYAN + keyword + LogColor.ANSI_RESET;
+    }
+
     public static String getFontPurpleToKeyword(String keyword) {
         return LogColor.ANSI_BRIGHT_PURPLE + keyword + LogColor.ANSI_RESET;
     }

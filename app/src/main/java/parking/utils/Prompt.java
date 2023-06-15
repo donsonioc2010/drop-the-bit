@@ -1,16 +1,25 @@
 package parking.utils;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Prompt {
-    private static Scanner sc = null;
+    private Scanner sc = null;
 
-    public static String getInputString(String title) {
+    public Prompt() {
+        this(System.in);
+    }
+
+    public Prompt(InputStream in) {
+        this.sc = new Scanner(in);
+    }
+
+    public String getInputString(String title) {
         System.out.print(title);
         return sc.nextLine();
     }
 
-    public static int getInputInt(String title) {
+    public int getInputInt(String title) {
         try {
             return Integer.parseInt(getInputString(title));
         } catch (NumberFormatException e) {
@@ -20,14 +29,7 @@ public class Prompt {
         }
     }
 
-    public static void scClose() {
+    public void scClose() {
         sc.close();
     }
-
-    public static void scOpen() {
-        if (sc == null) {
-            sc = new Scanner(System.in);
-        }
-    }
-
 }
