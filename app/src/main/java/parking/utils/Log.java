@@ -30,10 +30,22 @@ public class Log {
     }
 
     public static String getMenu(int num, String message) {
-        return LogColor.ANSI_GREEN + "[" + num + "]" + LogColor.ANSI_RESET + message;
+        return LogColor.ANSI_GREEN + "[" + num + "] " + LogColor.ANSI_RESET + message;
     }
 
-    public static String getYelloLog(String message) {
+    public static String getYellowLog(String message) {
         return LogColor.ANSI_YELLOW + message + LogColor.ANSI_RESET;
+    }
+
+    public static String bgBlueFgBlack(String message) {
+        return LogColor.ANSI_BG_BLUE + LogColor.ANSI_BLACK + message + LogColor.ANSI_RESET;
+    }
+
+    public static String getWarn() {
+        return LogColor.ANSI_BRIGHT_WHITE + LogColor.ANSI_YELLOW + "[WARN]" + LogColor.ANSI_RESET + " ";
+    }
+
+    public static String getWarn(String message) {
+        return getWarn() + message;
     }
 }

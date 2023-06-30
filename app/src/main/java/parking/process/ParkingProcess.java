@@ -1,9 +1,9 @@
 package parking.process;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import parking.domain.ParkingCar;
+import parking.type.MemberType;
 import parking.utils.Log;
 import parking.utils.Prompt;
 import parking.utils.TitlePrintUtils;
@@ -16,8 +16,13 @@ public class ParkingProcess {
 
     private Prompt prompt;
 
-    public ParkingProcess(Prompt prompt) {
+    private MemberType loginMemberType;
+
+    public ParkingProcess(Prompt prompt, MemberType loginMemberType) {
         this.prompt = prompt;
+        this.loginMemberType = loginMemberType;
+        this.printAuthType();
+
         parkInfo = new ParkingCar[SIZE];
     }
 
@@ -27,20 +32,23 @@ public class ParkingProcess {
 
     private void addParkingCar() {
         if (isCanUseLength()) {
-            String carNumber = prompt.getInputString(Log.getFontCyanToKeyword("[차량번호 입력]:"));
+            String carNumber = prompt.getInputString(Log.getFontCyanToKeyword("[차량번호 입력]") + " > ");
             String phoneNumber = prompt.getInputString(Log.getFontCyanToKeyword("[전화번호 입력]:"));
-            boolean isPayment = prompt.getInputString(Log.getFontCyanToKeyword("[계산 여부 입력(Y/N)]:"))
+            boolean isPayment = prompt.getInputString(Log.getFontCyanToKeyword("[계산 여부 입력(Y/N)]") + " > ")
                 .equalsIgnoreCase("y") ? true : false;
 
-            parkInfo[length] = new ParkingCar(userId,
-                carNumber, phoneNumber,
-                LocalDateTime.now().format(DateTimeFormatter.ISO_INSTANT.ofPattern("yyyy-MM-dd HH:mm")),
-                1000, isPayment
+            parkInfo[length] = new ParkingCar(
+                userId,
+                carNumber,
+                phoneNumber,
+                LocalDateTime.now(),
+                1000,
+                isPayment
             );
             userId++;
             length++;
         } else {
-            System.out.println("주차장의 사용량이 최대치에 도달하여 더이상 입차를 받지 못합니다.");
+            System.out.println(Log.getError("주차장의 사용량이 최대치에 도달하여 더이상 입차를 받지 못합니다."));
         }
     }
 
@@ -133,5 +141,17 @@ public class ParkingProcess {
 
     private static String getPaymentStatusToString(boolean isPayment) {
         return isPayment ? "정산완료" : "미정산";
+    }
+
+    private void printAuthType() {
+        System.out.println();
+        System.out.println(Log.getFontBlueToKeyword("[로그인 권한] ")
+            + Log.getFontRedToKeyword(loginMemberType.name()));
+        System.out.println();
+    }
+
+    public void setLoginMemberType(MemberType loginMemberType) {
+        this.loginMemberType = loginMemberType;
+        this.printAuthType();
     }
 }
