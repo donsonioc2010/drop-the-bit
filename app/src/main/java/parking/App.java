@@ -1,6 +1,6 @@
 package parking;
 
-import parking.process.MainProcess;
+import parking.park.process.MainProcess;
 import parking.utils.Prompt;
 
 /**
@@ -22,11 +22,14 @@ import parking.utils.Prompt;
  */
 public class App {
 	public static void main(String[] args) {
-		Prompt.scOpen();
+
+		Prompt prompt = new Prompt();
+
+
 
 		MainProcess.mainProcess();
 
-		Prompt.scClose();
+		prompt.scClose();
 	}
 
 }
