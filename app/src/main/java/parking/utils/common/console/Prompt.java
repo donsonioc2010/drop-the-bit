@@ -1,6 +1,7 @@
-package parking.utils;
+package parking.utils.common.console;
 
 import java.io.InputStream;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Prompt {
@@ -14,12 +15,12 @@ public class Prompt {
 		this.sc = new Scanner(in);
 	}
 
-	public String getInputString(String title) {
+	public String getInputString(String title) throws NoSuchElementException, IllegalStateException {
 		System.out.print(title);
 		return sc.nextLine();
 	}
 
-	public int getInputInt(String title) {
+	public int getInputInt(String title) throws NoSuchElementException, IllegalStateException {
 		return Integer.parseInt(getInputString(title));
 	}
 

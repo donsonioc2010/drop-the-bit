@@ -1,36 +1,75 @@
 package parking;
 
-import parking.park.process.MainProcess;
-import parking.utils.Prompt;
+import static parking.utils.common.TitlePrintUtils.processStartTitle;
 
-/**
- * ## 로직
- * ### 관리 데이터 리스트
- * - id : Long
- * - CarNumber : String
- * - PhoneNumber : String
- * - NearInTime\[최근 입차시간\] : LocalDateTime
- * - Amount : Int
- * - isPayment : Boolean
- * ### 행위
- * 1. 입차
- * 2. 출차
- * 3. 출력
- * 4. 수정
- * 5. 출차
- * 6. 종료
- */
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import parking.member.domain.Member;
+import parking.park.domain.ParkingCar;
+import parking.park.handler.impl.ParkingAddListener;
+import parking.park.handler.impl.ParkingDeleteListener;
+import parking.park.handler.impl.ParkingDetailListener;
+import parking.park.handler.impl.ParkingListListener;
+import parking.park.handler.impl.ParkingUpdateListener;
+import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.menu.Menu;
+import parking.utils.menu.MenuGroup;
+
 public class App {
 	public static void main(String[] args) {
+		new MainHandler().run();
+	}
+}
 
-		Prompt prompt = new Prompt();
+class MainHandler {
+	private static boolean isRunning;
+	private List<Member> memberList = new ArrayList<>();
+	private List<ParkingCar> parkingList = new LinkedList<>();
+	private BreadcrumbPrompt prompt;
 
+	MenuGroup menu = new MenuGroup("메인");
 
+	public MainHandler() {
+		isRunning = true;
+		this.prompt = new BreadcrumbPrompt();
+		this.renderMenu();
+	}
 
-		MainProcess.mainProcess();
-
+	public void run() {
+		processStartTitle();
+		menu.execute(prompt);
 		prompt.scClose();
 	}
 
+	private void renderMenu() {
+		renderParkMenu();
+		renderMemberMenu();
+	}
+
+	private void renderParkMenu() {
+		MenuGroup parkMenu = new MenuGroup("주차");
+		parkMenu.add(new Menu("등록", new ParkingAddListener(parkingList)));
+		parkMenu.add(new Menu("리스트 조회", new ParkingListListener(parkingList)));
+		parkMenu.add(new Menu("세부조회", new ParkingDetailListener(parkingList)));
+		parkMenu.add(new Menu("정보수정", new ParkingUpdateListener(parkingList)));
+		parkMenu.add(new Menu("삭제", new ParkingDeleteListener(parkingList)));
+
+		menu.add(parkMenu);
+	}
+
+	private void renderMemberMenu() {
+		MenuGroup memberMenu = new MenuGroup("회원");
+		memberMenu.add(new Menu("등록", null));
+		memberMenu.add(new Menu("리스트 조회", null));
+		memberMenu.add(new Menu("세부 조회", null));
+		memberMenu.add(new Menu("수정", null));
+		memberMenu.add(new Menu("삭제", null));
+
+		menu.add(memberMenu);
+	}
+
 }
+
 
