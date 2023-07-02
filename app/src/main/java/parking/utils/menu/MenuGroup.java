@@ -3,6 +3,7 @@ package parking.utils.menu;
 import java.util.ArrayList;
 
 import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.log.Log;
 
 public class MenuGroup extends Menu {
 	ArrayList<Menu> childs;
@@ -30,7 +31,7 @@ public class MenuGroup extends Menu {
 
 			int menuNo = Integer.parseInt(input);
 			if (menuNo < 0 || menuNo > this.childs.size()) {
-				System.out.println("메뉴 번호가 옳지 않습니다");
+				System.out.println(Log.warn("메뉴 번호가 옳지 않습니다"));
 			} else if (menuNo == 0) {
 				prompt.removeBreadcrumb();
 				return;

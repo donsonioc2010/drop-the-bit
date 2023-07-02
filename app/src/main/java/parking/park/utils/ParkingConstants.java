@@ -1,10 +1,12 @@
 package parking.park.utils;
 
+import parking.utils.log.Log;
+
 public class ParkingConstants {
 	public static final String NO_DATA = "입력된 데이터가 없습니다.";
 
 	public static void outPutNoData() {
-		System.out.println(NO_DATA);
+		System.out.println(Log.error(NO_DATA));
 	}
 
 	public static void outPutTitle() {

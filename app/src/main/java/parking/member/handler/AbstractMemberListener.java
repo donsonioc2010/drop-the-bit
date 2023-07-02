@@ -5,6 +5,7 @@ import java.util.List;
 import parking.member.domain.Member;
 import parking.session.LoginSession;
 import parking.utils.listener.ActionListener;
+import parking.utils.log.Log;
 
 // 사용자 추가, 삭제, 수정, 조회 단, 리스트
 public abstract class AbstractMemberListener implements ActionListener {
@@ -41,7 +42,7 @@ public abstract class AbstractMemberListener implements ActionListener {
 
 	public boolean isAbleNeedLogin() {
 		if (!isHaveLoginInSession()) {
-			System.out.println("[ERROR] 로그인을 해야 가능한 기능입니다.");
+			System.out.println(Log.error("로그인을 해야 가능한 기능입니다"));
 			return false;
 		}
 		return true;

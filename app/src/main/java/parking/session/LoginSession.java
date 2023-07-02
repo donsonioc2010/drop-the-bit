@@ -3,6 +3,7 @@ package parking.session;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import parking.member.domain.Member;
+import parking.member.type.MemberType;
 
 /**
  * 현재 접속되어있는 로그인 정보
@@ -27,5 +28,11 @@ public class LoginSession {
 
 	public void setLoginMember(Member loginMember) {
 		this.loginMember = loginMember;
+	}
+
+	public boolean isAbleUseFunctionByAdminAndStaff() {
+		return loginMember != null &&
+			(MemberType.ADMIN.equals(loginMember.getMemberType()) ||
+				MemberType.STAFF.equals(loginMember.getMemberType()));
 	}
 }

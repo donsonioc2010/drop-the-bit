@@ -7,6 +7,7 @@ import parking.member.handler.AbstractMemberListener;
 import parking.member.type.MemberType;
 import parking.member.utils.MemberConstants;
 import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.log.Log;
 
 public class MemberListListener extends AbstractMemberListener {
 	public MemberListListener(List<Member> list) {
@@ -19,7 +20,7 @@ public class MemberListListener extends AbstractMemberListener {
 			!(MemberType.ADMIN.equals(getLoginMember().getMemberType()) ||
 				MemberType.STAFF.equals(getLoginMember().getMemberType()))
 		) {
-			System.out.println("[ERROR] 조회 권한이 없습니다.");
+			System.out.println(Log.error("조회 권한이 없습니다."));
 			return;
 		}
 

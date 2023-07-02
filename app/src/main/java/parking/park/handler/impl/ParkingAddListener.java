@@ -5,6 +5,7 @@ import java.util.List;
 import parking.park.domain.ParkingCar;
 import parking.park.handler.AbstractParkingListener;
 import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.log.Log;
 
 /**
  * 차량 추가
@@ -22,7 +23,7 @@ public class ParkingAddListener extends AbstractParkingListener {
 			if (this.findParkingCarByCarNumber(carNumber) == null) {
 				break;
 			}
-			System.out.println("[ERROR] 이미 입차, 주차 된 차량번호 입니다.");
+			System.out.println(Log.error("이미 입차, 주차 된 차량번호 입니다"));
 		}
 
 		String phoneNumber = prompt.getInputString("전화번호 입력 : ");

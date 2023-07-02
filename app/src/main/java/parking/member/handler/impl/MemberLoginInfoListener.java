@@ -5,6 +5,7 @@ import java.util.List;
 import parking.member.domain.Member;
 import parking.member.handler.AbstractMemberListener;
 import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.log.Log;
 
 public class MemberLoginInfoListener extends AbstractMemberListener {
 	public MemberLoginInfoListener(List<Member> list) {
@@ -14,7 +15,7 @@ public class MemberLoginInfoListener extends AbstractMemberListener {
 	@Override
 	public void service(BreadcrumbPrompt prompt) {
 		if (!isHaveLoginInSession()) {
-			System.out.println("[ERROR] 현재 로그인한 사용자 정보가 없습니다");
+			System.out.println(Log.error("현재 로그인한 사용자 정보가 없습니다"));
 			return;
 		}
 

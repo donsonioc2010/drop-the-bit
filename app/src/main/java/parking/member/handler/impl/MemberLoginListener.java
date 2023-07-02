@@ -6,6 +6,7 @@ import parking.member.domain.Member;
 import parking.member.handler.AbstractMemberListener;
 import parking.session.LoginSession;
 import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.log.Log;
 
 public class MemberLoginListener extends AbstractMemberListener {
 	public MemberLoginListener(List<Member> list) {
@@ -15,12 +16,12 @@ public class MemberLoginListener extends AbstractMemberListener {
 	@Override
 	public void service(BreadcrumbPrompt prompt) {
 		if (isHaveLoginInSession()) {
-			System.out.println("[ERROR] 현재 다른 사용자가 로그인 되어 있습니다. 로그아웃 이후 로그인 해주시기 바랍니다.");
+			System.out.println(Log.error("현재 다른 사용자가 로그인 되어 있습니다. 로그아웃 이후 로그인 해주시기 바랍니다"));
 		}
 
 		Member searchMember = findByUserId(prompt.getInputString("ID > "));
 		if (searchMember == null) {
-			System.out.println("[ERROR] 해당 사용자는 존재하지 않습니다");
+			System.out.println(Log.error("해당 사용자는 존재하지 않습니다"));
 			return;
 		}
 
@@ -31,7 +32,7 @@ public class MemberLoginListener extends AbstractMemberListener {
 			return;
 		}
 
-		System.out.println("[ERROR] 패스워드가 일치하지 않습니다.");
+		System.out.println(Log.error("패스워드가 일치하지 않습니다"));
 
 	}
 }

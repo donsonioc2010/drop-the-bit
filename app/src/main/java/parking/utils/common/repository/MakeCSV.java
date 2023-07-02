@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import parking.utils.common.domain.CsvObject;
+import parking.utils.log.Log;
 
 public class MakeCSV {
 	public static <T extends CsvObject> void saveCsv(String fileName, List<T> list) {
@@ -24,7 +25,7 @@ public class MakeCSV {
 			}
 			pw.close();
 		} catch (IOException e) {
-			System.out.printf("IOException : %s 파일 IO 에러\n", fileName);
+			System.out.println(Log.error(String.format("IOException : %s 파일 IO 에러", fileName)));
 		}
 	}
 
@@ -33,7 +34,7 @@ public class MakeCSV {
 		try {
 			File file = new File(fileName);
 			if (!file.exists()) {
-				System.out.println("파일 생성");
+				System.out.println(Log.warn(fileName + "파일 생성"));
 				file.createNewFile();
 			}
 
@@ -47,13 +48,13 @@ public class MakeCSV {
 			}
 			br.close();
 		} catch (NoSuchMethodException e) {
-			System.out.printf("NoSuchMethodException : %s 읽는 중 오류 발생\n", fileName);
+			System.out.println(Log.error(String.format("NoSuchMethodException : %s 읽는 중 오류 발생", fileName)));
 		} catch (FileNotFoundException e) {
-			System.out.printf("FileNotFoundException : %s 파일 존재 유무 확인해주세요\n", fileName);
+			System.out.println(Log.error(String.format("FileNotFoundException : %s 파일 존재 유무 확인해주세요", fileName)));
 		} catch (IOException e) {
-			System.out.printf("IOException : %s 파일 IO 에러\n", fileName);
+			System.out.println(Log.error(String.format("IOException : %s 파일 IO 에러", fileName)));
 		} catch (InvocationTargetException | IllegalAccessException e) {
-			System.out.printf("Invocation, Illegal Exception : fileName : %s\n", fileName);
+			System.out.println(Log.error(String.format("Invocation, Illegal Exception : fileName : %s\n", fileName)));
 		}
 	}
 }
