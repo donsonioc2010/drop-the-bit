@@ -25,7 +25,7 @@ public class ParkingAddListener extends AbstractParkingListener {
 			System.out.println("이미 입차, 주차 된 차량번호 입니다.");
 		}
 
-		String phoneNumber = prompt.getInputString("전화번호 입력 :");
+		String phoneNumber = prompt.getInputString("전화번호 입력 : ");
 		boolean isPayment = prompt.getInputString("계산 여부 입력 ?(y/N) : ").equalsIgnoreCase("y") ? true : false;
 
 		parkingInfoList.add(

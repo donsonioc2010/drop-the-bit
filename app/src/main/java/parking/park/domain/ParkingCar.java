@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import parking.utils.LocalDateFormat;
 import parking.utils.common.domain.CsvObject;
 
 /**
@@ -22,7 +23,7 @@ import parking.utils.common.domain.CsvObject;
 public class ParkingCar implements Serializable, CsvObject {
 	private static final long serialVersionUID = 1L;
 
-	private static int userId = 1;
+	private static long parkingId = 1;
 	private long id;
 	private String carNumber;
 	private String phoneNumber;
@@ -44,7 +45,7 @@ public class ParkingCar implements Serializable, CsvObject {
 	//사용자 생성
 	public static ParkingCar createParkingInfo(String carNumber, String phoneNumber, boolean isPayment) {
 		return ParkingCar.builder()
-			.id(userId++)
+			.id(parkingId++)
 			.carNumber(carNumber)
 			.phoneNumber(phoneNumber)
 			.parkingStartTime(LocalDateTime.now())
@@ -53,7 +54,8 @@ public class ParkingCar implements Serializable, CsvObject {
 			.build();
 	}
 
-	public static ParkingCar updateParkingCarInfo(ParkingCar original, String carNumber, String phoneNumber, boolean isPayment){
+	public static ParkingCar updateParkingCarInfo(ParkingCar original, String carNumber, String phoneNumber,
+		boolean isPayment) {
 		return ParkingCar.builder()
 			.id(original.getId())
 			.carNumber(carNumber)
@@ -70,11 +72,32 @@ public class ParkingCar implements Serializable, CsvObject {
 
 	@Override
 	public String toCsvString() {
-		return null;
+		return String.format("%d,%s,%s,%s,%d,%s",
+			getId(),
+			getCarNumber(),
+			getPhoneNumber(),
+			LocalDateFormat.getTimeToStringByLocalDateTime(getParkingStartTime()),
+			getAmount(),
+			isPayment()
+		);
 	}
 
-	@Override
-	public String fromCsvString(String csv) {
-		return null;
+	public static ParkingCar fromCsvString(final String csv) {
+		String[] csvSplit = csv.split(",");
+
+		ParkingCar info = ParkingCar.builder()
+			.id(Long.parseLong(csvSplit[0]))
+			.carNumber(csvSplit[1])
+			.phoneNumber(csvSplit[2])
+			.parkingStartTime(LocalDateFormat.getLocalDateTimeByString(csvSplit[3]))
+			.amount(Integer.parseInt(csvSplit[4]))
+			.isPayment(Boolean.valueOf(csvSplit[5]))
+			.build();
+
+		if (info.getId() >= parkingId) {
+			parkingId = info.getId() + 1L;
+		}
+
+		return info;
 	}
 }

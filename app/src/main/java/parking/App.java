@@ -14,6 +14,7 @@ import parking.park.handler.impl.ParkingDetailListener;
 import parking.park.handler.impl.ParkingListListener;
 import parking.park.handler.impl.ParkingUpdateListener;
 import parking.utils.common.console.BreadcrumbPrompt;
+import parking.utils.common.repository.MakeCSV;
 import parking.utils.menu.Menu;
 import parking.utils.menu.MenuGroup;
 
@@ -28,8 +29,7 @@ class MainHandler {
 	private List<Member> memberList = new ArrayList<>();
 	private List<ParkingCar> parkingList = new LinkedList<>();
 	private BreadcrumbPrompt prompt;
-
-	MenuGroup menu = new MenuGroup("메인");
+	private MenuGroup menu = new MenuGroup("메인");
 
 	public MainHandler() {
 		isRunning = true;
@@ -39,15 +39,25 @@ class MainHandler {
 
 	public void run() {
 		processStartTitle();
+
+		loadData();
 		menu.execute(prompt);
+		saveData();
+
 		prompt.scClose();
 	}
 
+	/**
+	 * 메뉴 생성
+	 */
 	private void renderMenu() {
 		renderParkMenu();
 		renderMemberMenu();
 	}
 
+	/**
+	 * 주차 메뉴 추가
+	 */
 	private void renderParkMenu() {
 		MenuGroup parkMenu = new MenuGroup("주차");
 		parkMenu.add(new Menu("등록", new ParkingAddListener(parkingList)));
@@ -59,6 +69,9 @@ class MainHandler {
 		menu.add(parkMenu);
 	}
 
+	/**
+	 * 회원 관리 메뉴 추가
+	 */
 	private void renderMemberMenu() {
 		MenuGroup memberMenu = new MenuGroup("회원");
 		memberMenu.add(new Menu("등록", null));
@@ -70,6 +83,13 @@ class MainHandler {
 		menu.add(memberMenu);
 	}
 
+	private void saveData() {
+		MakeCSV.saveCsv("data/parking.csv", parkingList);
+	}
+
+	private void loadData() {
+		MakeCSV.loadCsv("data/parking.csv", parkingList, ParkingCar.class);
+	}
 }
 
 

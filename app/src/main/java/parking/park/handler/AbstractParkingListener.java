@@ -19,7 +19,7 @@ public abstract class AbstractParkingListener implements ActionListener {
 			parkInfo.getId(),
 			parkInfo.getCarNumber(),
 			parkInfo.getPhoneNumber(),
-			LocalDateFormat.getLocalDateToFormatString(parkInfo.getParkingStartTime()),
+			LocalDateFormat.getTimeToStringByLocalDateTime(parkInfo.getParkingStartTime()),
 			parkInfo.getAmount(),
 			ParkingCar.getPaymentStatusToString(parkInfo.isPayment())
 		);
