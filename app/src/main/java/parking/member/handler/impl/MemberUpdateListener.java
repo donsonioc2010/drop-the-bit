@@ -47,6 +47,6 @@ public class MemberUpdateListener extends AbstractMemberListener {
 	public void editProcess(Member updateMember, MemberType requestMemberType) {
 		String password = this.prompt.getInputString("변경 PWD > ");
 		updateMember.setPassword(password);
-		System.out.println("[SUCCESS] 패스워드 수정이 완료되었습니다.");
+		System.out.println("[INFO] 패스워드 수정이 완료되었습니다.");
 	}
 }

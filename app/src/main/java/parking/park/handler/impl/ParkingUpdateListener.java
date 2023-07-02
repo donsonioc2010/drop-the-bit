@@ -29,7 +29,7 @@ public class ParkingUpdateListener extends AbstractParkingListener {
 			if (this.findParkingCarByCarNumber(carNumber) == null) {
 				break;
 			}
-			System.out.println("이미 입차, 주차 된 차량번호 입니다. 재입력 해주시기 바랍니다.");
+			System.out.println("[WARN] 이미 입차, 주차 된 차량번호 입니다. 재입력 해주시기 바랍니다.");
 		}
 		String phoneNumber = prompt.getInputString("수정희망 휴대폰 번호 : ");
 		boolean isPayment = prompt.getInputString("정산 여부 (y/N) : ").equalsIgnoreCase("y") ? true : false;

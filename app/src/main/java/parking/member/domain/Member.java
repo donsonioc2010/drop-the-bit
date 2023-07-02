@@ -43,10 +43,27 @@ public class Member implements Serializable, CsvObject {
 
 	@Override
 	public String toCsvString() {
-		return null;
+		return String.format("%d,%s,%s,%s",
+			getNo(),
+			getId(),
+			getPassword(),
+			getMemberType()
+		);
 	}
 
-	public static String fromCsvString(String csv) {
-		return null;
+	public static Member fromCsvString(final String csv) {
+		String[] csvSplit = csv.split(",");
+		Member info = Member.builder()
+			.no(Long.parseLong(csvSplit[0]))
+			.id(csvSplit[1])
+			.password(csvSplit[2])
+			.memberType(MemberType.valueOf(csvSplit[3]))
+			.build();
+
+		if (info.getNo() >= noCnt) {
+			noCnt = info.getNo() + 1L;
+		}
+
+		return info;
 	}
 }

@@ -15,10 +15,10 @@ public class MemberLogoutListener extends AbstractMemberListener {
 	@Override
 	public void service(BreadcrumbPrompt prompt) {
 		if (getLoginMember() == null) {
-			System.out.println("현재 로그인이 되어 있지 않습니다.");
+			System.out.println("[ERROR] 현재 로그인이 되어 있지 않습니다.");
 			return;
 		}
-		System.out.printf("%s 사용자 로그아웃\n", getLoginMember().getId());
+		System.out.printf("[INFO] %s 사용자 로그아웃\n", getLoginMember().getId());
 
 		logout();
 	}

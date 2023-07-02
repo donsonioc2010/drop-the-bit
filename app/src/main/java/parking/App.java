@@ -15,7 +15,6 @@ import parking.member.handler.impl.MemberLoginInfoListener;
 import parking.member.handler.impl.MemberLoginListener;
 import parking.member.handler.impl.MemberLogoutListener;
 import parking.member.handler.impl.MemberUpdateListener;
-import parking.member.type.MemberType;
 import parking.park.domain.ParkingCar;
 import parking.park.handler.impl.ParkingAddListener;
 import parking.park.handler.impl.ParkingDeleteListener;
@@ -35,9 +34,7 @@ public class App {
 
 class MainHandler {
 	private static boolean isRunning;
-	private List<Member> memberList = new ArrayList<>() {{
-		add(Member.createMember("admin", "admin", MemberType.ADMIN));
-	}};
+	private List<Member> memberList = new ArrayList<>();
 	private List<ParkingCar> parkingList = new LinkedList<>();
 	private BreadcrumbPrompt prompt;
 	private MenuGroup menu = new MenuGroup("메인");
@@ -99,10 +96,12 @@ class MainHandler {
 
 	private void saveData() {
 		MakeCSV.saveCsv("data/parking.csv", parkingList);
+		MakeCSV.saveCsv("data/member.csv", memberList);
 	}
 
 	private void loadData() {
 		MakeCSV.loadCsv("data/parking.csv", parkingList, ParkingCar.class);
+		MakeCSV.loadCsv("data/member.csv", memberList, Member.class);
 	}
 }
 

@@ -33,14 +33,14 @@ public class MemberDeleteListener extends AbstractMemberListener {
 			System.out.println("[WARN] 현재 로그인한 사용자 세션이 종료됩니다.");
 			logout();
 			list.remove(deleteMember);
-			System.out.println("[SUCCESS] 삭제가 완료되었습니다.");
+			System.out.println("[INFO] 삭제가 완료되었습니다.");
 			return;
 		}
 
 		if (MemberType.ADMIN.equals(getLoginMember().getMemberType())) {
 			System.out.println("[WARN] 관리자 기능을 통한 삭제가 이뤄집니다. 삭제를 진행하는 ID :" + getLoginMember().getId());
 			list.remove(deleteMember);
-			System.out.println("[SUCCESS] 삭제가 완료되었습니다.");
+			System.out.println("[INFO] 삭제가 완료되었습니다.");
 			return;
 		}
 

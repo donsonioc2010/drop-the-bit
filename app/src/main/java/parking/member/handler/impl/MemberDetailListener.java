@@ -25,13 +25,13 @@ public class MemberDetailListener extends AbstractMemberListener {
 		String id = prompt.getInputString("조회 ID >").trim();
 
 		if (id.isBlank()) {
-			System.out.println("입력된 정보가 없습니다");
+			System.out.println("[ERROR] 입력된 정보가 없습니다");
 			return;
 		}
 
 		Member searchMember = findByUserId(id);
 		if (searchMember == null) {
-			System.out.println("사용자 정보가 존재하지 않습니다.");
+			System.out.println("[ERROR] 사용자 정보가 존재하지 않습니다.");
 			return;
 		}
 		MemberConstants.outPutTitle();

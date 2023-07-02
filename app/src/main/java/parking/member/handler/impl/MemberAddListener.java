@@ -32,9 +32,9 @@ public class MemberAddListener extends AbstractMemberListener {
 		}
 
 		if (!result) {
-			System.out.println("계정 생성에 실패하였습니다.");
+			System.out.println("[ERROR] 계정 생성에 실패하였습니다.");
 		} else {
-			System.out.println("계정 생성에 성공하였습니다.");
+			System.out.println("[INFO] 계정 생성에 성공하였습니다.");
 		}
 	}
 
@@ -42,13 +42,13 @@ public class MemberAddListener extends AbstractMemberListener {
 		if (!MemberType.GUEST.equals(createType)) {
 			// 관리자, 직원, 정비사인 경우
 			if (!isHaveLoginInSession()) {
-				System.out.println("사용자 로그인이 되어 있지 않으면 게스트를 제외하고 추가가 불가능합니다");
+				System.out.println("[ERROR] 사용자 로그인이 되어 있지 않으면 게스트를 제외하고 추가가 불가능합니다");
 				return false;
 			}
 
 			Member loginMember = getLoginMember();
 			if (loginMember.getMemberType() != MemberType.ADMIN) {
-				System.out.println("관리자 사용자로 로그인을 하지 않으면 사용자의 추가가 불가능합니다.");
+				System.out.println("[ERROR] 관리자 사용자로 로그인을 하지 않으면 사용자의 추가가 불가능합니다.");
 				return false;
 			}
 		}
@@ -63,7 +63,7 @@ public class MemberAddListener extends AbstractMemberListener {
 			if (findByUserId(id) == null) {
 				break;
 			}
-			System.out.println("이미 사용중인 ID 입니다.");
+			System.out.println("[WARN] 이미 사용중인 ID 입니다.");
 		}
 		String password = prompt.getInputString("Password > ");
 		list.add(Member.createMember(id, password, createType));

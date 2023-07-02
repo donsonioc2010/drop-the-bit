@@ -14,7 +14,7 @@ public class MemberLoginInfoListener extends AbstractMemberListener {
 	@Override
 	public void service(BreadcrumbPrompt prompt) {
 		if (!isHaveLoginInSession()) {
-			System.out.println("현재 로그인한 사용자 정보가 없습니다");
+			System.out.println("[ERROR] 현재 로그인한 사용자 정보가 없습니다");
 			return;
 		}
 

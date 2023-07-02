@@ -15,7 +15,7 @@ public class MemberLoginListener extends AbstractMemberListener {
 	@Override
 	public void service(BreadcrumbPrompt prompt) {
 		if (isHaveLoginInSession()) {
-			System.out.println("현재 다른 사용자가 로그인 되어 있습니다. 로그아웃 이후 로그인 해주시기 바랍니다.");
+			System.out.println("[ERROR] 현재 다른 사용자가 로그인 되어 있습니다. 로그아웃 이후 로그인 해주시기 바랍니다.");
 		}
 
 		Member searchMember = findByUserId(prompt.getInputString("ID > "));
@@ -24,14 +24,14 @@ public class MemberLoginListener extends AbstractMemberListener {
 			return;
 		}
 
-		String password = prompt.getInputString("PWD >");
+		String password = prompt.getInputString("PWD > ");
 
 		if (searchMember.getPassword().equals(password)) {
 			LoginSession.getInstance().setLoginMember(searchMember);
 			return;
 		}
 
-		System.out.println("패스워드가 일치하지 않습니다.");
+		System.out.println("[ERROR] 패스워드가 일치하지 않습니다.");
 
 	}
 }
