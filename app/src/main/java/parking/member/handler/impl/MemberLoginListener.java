@@ -29,6 +29,7 @@ public class MemberLoginListener extends AbstractMemberListener {
 
 		if (searchMember.getPassword().equals(password)) {
 			LoginSession.getInstance().setLoginMember(searchMember);
+			System.out.println(Log.info("로그인 성공 " + searchMember.getId()+"님 반갑습니다."));
 			return;
 		}
 

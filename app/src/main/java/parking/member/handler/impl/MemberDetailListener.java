@@ -21,6 +21,7 @@ public class MemberDetailListener extends AbstractMemberListener {
 				MemberType.STAFF.equals(getLoginMember().getMemberType()))
 		) {
 			System.out.println(Log.error("조회 권한이 없습니다."));
+			return;
 		}
 
 		String id = prompt.getInputString("조회 ID >").trim();
