@@ -7,6 +7,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import parking.member.domain.Member;
+import parking.member.handler.impl.MemberAddListener;
+import parking.member.handler.impl.MemberDeleteListener;
+import parking.member.handler.impl.MemberDetailListener;
+import parking.member.handler.impl.MemberListListener;
+import parking.member.handler.impl.MemberLoginInfoListener;
+import parking.member.handler.impl.MemberLoginListener;
+import parking.member.handler.impl.MemberLogoutListener;
+import parking.member.handler.impl.MemberUpdateListener;
+import parking.member.type.MemberType;
 import parking.park.domain.ParkingCar;
 import parking.park.handler.impl.ParkingAddListener;
 import parking.park.handler.impl.ParkingDeleteListener;
@@ -26,7 +35,9 @@ public class App {
 
 class MainHandler {
 	private static boolean isRunning;
-	private List<Member> memberList = new ArrayList<>();
+	private List<Member> memberList = new ArrayList<>() {{
+		add(Member.createMember("admin", "admin", MemberType.ADMIN));
+	}};
 	private List<ParkingCar> parkingList = new LinkedList<>();
 	private BreadcrumbPrompt prompt;
 	private MenuGroup menu = new MenuGroup("메인");
@@ -74,11 +85,14 @@ class MainHandler {
 	 */
 	private void renderMemberMenu() {
 		MenuGroup memberMenu = new MenuGroup("회원");
-		memberMenu.add(new Menu("등록", null));
-		memberMenu.add(new Menu("리스트 조회", null));
-		memberMenu.add(new Menu("세부 조회", null));
-		memberMenu.add(new Menu("수정", null));
-		memberMenu.add(new Menu("삭제", null));
+		memberMenu.add(new Menu("등록", new MemberAddListener(memberList)));
+		memberMenu.add(new Menu("리스트 조회", new MemberListListener(memberList)));
+		memberMenu.add(new Menu("세부 조회", new MemberDetailListener(memberList)));
+		memberMenu.add(new Menu("수정", new MemberUpdateListener(memberList)));
+		memberMenu.add(new Menu("삭제", new MemberDeleteListener(memberList)));
+		memberMenu.add(new Menu("로그인", new MemberLoginListener(memberList)));
+		memberMenu.add(new Menu("로그아웃", new MemberLogoutListener(memberList)));
+		memberMenu.add(new Menu("로그인정보", new MemberLoginInfoListener(memberList)));
 
 		menu.add(memberMenu);
 	}

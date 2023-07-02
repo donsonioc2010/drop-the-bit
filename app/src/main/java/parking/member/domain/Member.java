@@ -46,8 +46,7 @@ public class Member implements Serializable, CsvObject {
 		return null;
 	}
 
-	@Override
-	public String fromCsvString(String csv) {
+	public static String fromCsvString(String csv) {
 		return null;
 	}
 }
