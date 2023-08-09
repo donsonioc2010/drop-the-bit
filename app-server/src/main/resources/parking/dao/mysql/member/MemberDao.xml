@@ -11,7 +11,7 @@
 
     <update id="update" parameterType="Member">
         UPDATE member
-        SET password=sha1(#{password}), member_type=#{memberType}
+        SET password=sha1(#{password}), member_type=#{memberType}, updated_at=NOW()
         WHERE id=#{id}
     </update>
 

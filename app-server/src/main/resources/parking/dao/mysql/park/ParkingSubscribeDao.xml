@@ -3,4 +3,80 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="parking.park.dao.ParkingSubscribeDao">
+    <insert id="insert" parameterType="ParkSubscribe">
+        INSERT INTO park_subscribe(car_number, phone_number, subscribe_st_at, subscribe_ed_at)
+        VALUES (#{carNumber}, #{phoneNumber}, #{subscribeStAt}, #{subscribeEdAt} )
+    </insert>
+
+    <update id="updateById" parameterType="ParkSubscribe">
+        UPDATE park_subscribe
+        SET
+        car_number=#{carNumber},
+        phone_number=#{phoneNumber},
+        subscribe_st_at=#{subscribeStAt},
+        subscribe_ed_at=#{subscribeEdAt}
+        WHERE id=#{id}
+    </update>
+
+    <update id="updateByCarNumber" parameterType="ParkSubscribe">
+        UPDATE park_subscribe
+        SET
+        phone_number=#{phoneNumber},
+        subscribe_st_at=#{subscribeStAt},
+        subscribe_ed_at=#{subscribeEdAt}
+        WHERE car_number=#{carNumber}
+    </update>
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM park_subscribe WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByCarNumber" parameterType="String">
+        DELETE FROM park_subscribe WHERE car_number=#{carNumber}
+    </delete>
+
+    <select id="findAll" resultType="ParkSubscribe">
+        SELECT
+        id, car_number, phone_number, subscribe_st_at, subscribe_ed_at
+        FROM park_subscribe
+    </select>
+
+    <select id="findExpiredList" resultType="ParkSubscribe">
+        SELECT
+        id, car_number, phone_number, subscribe_st_at, subscribe_ed_at
+        FROM park_subscribe
+        WHERE 1=1
+        <![CDATA[
+                AND subscribe_ed_at <= NOW()
+            ]]>
+    </select>
+    <select id="findNotExpiredList" resultType="ParkSubscribe">
+        SELECT
+        id, car_number, phone_number, subscribe_st_at, subscribe_ed_at
+        FROM park_subscribe
+        WHERE 1=1
+        <![CDATA[
+                AND subscribe_ed_at > NOW()
+            ]]>
+    </select>
+
+    <select id="findById" resultType="ParkSubscribe" parameterType="Long">
+        SELECT
+        id, car_number, phone_number, subscribe_st_at, subscribe_ed_at
+        FROM park_subscribe
+        WHERE id=#{id}
+    </select>
+
+    <select id="findByCarNumber" resultType="ParkSubscribe" parameterType="String">
+        SELECT
+        id, car_number, phone_number, subscribe_st_at, subscribe_ed_at
+        FROM park_subscribe
+        WHERE car_number=#{carNumber}
+    </select>
+
+    <select id="findByPhoneNumber" resultType="ParkSubscribe" parameterType="String">
+        SELECT
+        id, car_number, phone_number, subscribe_st_at, subscribe_ed_at
+        FROM park_subscribe
+        WHERE phone_number=#{phoneNumber}
+    </select>
 </mapper>

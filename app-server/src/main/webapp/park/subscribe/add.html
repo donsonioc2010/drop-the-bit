@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주차 정기 구독 추가</title>
+</head>
+<body>
+<form action='/park/subscribe/add' method="post">
+    <table border="1">
+        <tr>
+            <th>차량번호</th>
+            <td style="width:200px;"><input type='text' name='carNumber'></td>
+        </tr>
+        <tr>
+            <th>차주 연락처</th>
+            <td><input type='text' name='phoneNumber'></td>
+        </tr>
+        <tr>
+            <th>구매 월수</th>
+            <td><input type="number" name="expireMonth"/></td>
+        </tr>
+    </table>
+    <button>등록</button>
+</form>
+</body>
+</html>
